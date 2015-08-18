@@ -17,6 +17,16 @@ import cn.sh.xq.elephantweather.bean.WeatherSuggestion;
 public class JsonDataParseWeatherData {
 	private final String WEATHER_DATA_FIELD_KEY = "HeWeather data service 3.0";
 	private final String STATUS_KEY = "status";
+	private final String BASIC_KEY = "basic";
+	private final String CITY_KEY = "city";
+	private final String CNTY_KEY = "cnty";
+	private final String ID_KEY = "id";
+	private final String LAT_KEY = "lat";
+	private final String LON_KEY = "lon";
+	private final String UPDATE_KEY = "update";
+	private final String LOC_KEY = "loc";
+	private final String UTC_KEY = "utc";
+
 	private WeatherData mWeatherData;
 	private JSONObject mJsonDataField;
 
@@ -29,7 +39,6 @@ public class JsonDataParseWeatherData {
 		if (jsonData.equals(""))
 			return null;
 		mJsonDataField = getWeatherDataField(jsonData);
-
 		mWeatherData.setmStatus(getMStatus(mJsonDataField));
 		mWeatherData.setmWeatherBasic(getMWeatherBasic(mJsonDataField));
 		mWeatherData.setmWeatherNow(getMWeatherNow(mJsonDataField));
@@ -89,7 +98,45 @@ public class JsonDataParseWeatherData {
 	}
 
 	private WeatherBasic getMWeatherBasic(JSONObject jsonData) {
-		// TODO Auto-generated method stub
+		WeatherBasic weatherBasic = new WeatherBasic();
+		if (jsonData == null)
+			return null;
+		JSONObject jsonObject = jsonData;
+		if (jsonObject.has(BASIC_KEY)) {
+			jsonObject = jsonObject.getJSONObject(BASIC_KEY);
+			// Key is city
+			if (jsonObject.has(CITY_KEY)) {
+				weatherBasic.setCity(jsonObject.getString(CITY_KEY));
+			}
+			// Key is cnty
+			if (jsonObject.has(CNTY_KEY)) {
+				weatherBasic.setCnty(jsonObject.getString(CNTY_KEY));
+			}
+			// Key is id
+			if (jsonObject.has(ID_KEY)) {
+				weatherBasic.setId(jsonObject.getString(ID_KEY));
+			}
+			// Key is lat
+			if (jsonObject.has(LAT_KEY)) {
+				weatherBasic.setLat(jsonObject.getString(LAT_KEY));
+			}
+			// Key is lon
+			if (jsonObject.has(LON_KEY)) {
+				weatherBasic.setLon(jsonObject.getString(LON_KEY));
+			}
+			// Key is update
+			if (jsonObject.has(UPDATE_KEY)) {
+				jsonObject = jsonObject.getJSONObject(UPDATE_KEY);
+				if (jsonObject.has(LOC_KEY)) {
+					weatherBasic.setUpdateLoc(jsonObject.getString(LOC_KEY));
+				}
+				if (jsonObject.has(UTC_KEY)) {
+					weatherBasic.setUpdateUtc(jsonObject.getString(UTC_KEY));
+				}
+
+			}
+			return weatherBasic;
+		}
 		return null;
 	}
 
@@ -102,8 +149,6 @@ public class JsonDataParseWeatherData {
 			status = jsonObject.getString(STATUS_KEY);
 			return status;
 		}
-		// TODO Auto-generated method stub
-
 		return null;
 	}
 
