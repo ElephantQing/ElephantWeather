@@ -7,7 +7,7 @@ import java.io.InputStream;
 import cn.sh.xq.elephantweather.services.JsonDataParseWeatherData;
 import cn.sh.xq.elephantweather.util.WeatherDataQuary;
 
-public class testMain {
+public class testJsonDataParseWeatherData {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
